@@ -63,6 +63,6 @@ int j = i; // (3)
 如果对声明了`volatile`变量进行写操作时, `JVM`会向处理器发送一条`Lock`前缀的指令, `Lock`前缀指令实际上相当于一个`内存屏障`也称`内存栅栏`, 它确保指令重排序时不会把其后面的指令排到内存屏障之前的位置, 也不会把前面的指令排到内存屏障的后面; 即在执行到内存屏障这句指令时, 在它前面的操作已经全部完成.
 
 ### 参考致谢
-参考书籍: Java并发编程的艺术 - 方腾飞
-网上资料: https://www.cnblogs.com/nexiyi/p/java_memory_model_and_thread.html
+参考书籍: Java并发编程的艺术 - 方腾飞  
+网上资料: https://www.cnblogs.com/nexiyi/p/java_memory_model_and_thread.html  
 网上资料: http://www.importnew.com/24082.html
