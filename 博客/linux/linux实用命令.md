@@ -14,3 +14,6 @@ sed -i 's/\r$//' <filename>
 yum install psmisc
 该命令可以快速杀死所有指定名称进程
 killall -9 xx(进程名称)
+
+# netstat
+yum install net-tools
