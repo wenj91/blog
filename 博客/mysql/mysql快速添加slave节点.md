@@ -63,12 +63,15 @@ Give it a Try !!!
 
 
 ```
+# dump一份主节点数据
 mysqldump -uroot -p123456 --master-data=1 --single-transaction --flush-privileges --routines --triggers --all-databases > MySQLData.sql
 
+# 查看dump数据信息
 head -22 MySQLData.sql | tail -1
+# 控制台输出
+CHANGE MASTER TO MASTER_LOG_FILE='mysql-bin.000005', MASTER_LOG_POS=342;
 
-CHANGE MASTER TO MASTER_LOG_FILE='mysql-bin.000001', MASTER_LOG_POS=527;
-
+# 创建日志表
 CREATE TABLE MY_TABLE (
   File VARCHAR,
   Position BIGINT UNSIGNED,
@@ -77,6 +80,7 @@ CREATE TABLE MY_TABLE (
 );
 INSERT INTO MY_TABLE(File, Position) VALUES ('mysql-bin.000001', 1061);
 
+# 从库指向主库
 CHANGE MASTER TO
 MASTER_HOST='docker.for.mac.host.internal',
 MASTER_PORT=3306,
@@ -85,15 +89,17 @@ MASTER_PASSWORD='123456',
 MASTER_LOG_FILE='mysql-bin.000001',
 MASTER_LOG_POS=1061;
 
-
+# 从库配置
 slave--my.cnf
 [mysqld]
 server-id=2
 relay-log=slave-relay-bin
 relay-log-index=slave-relay-bin.index
 
+# 重置
 RESET SLAVE;
 
+# 开始备份
 start slave;
 
 show variables like '%server_id%';
@@ -122,7 +128,7 @@ docker cp /Users/wenj91/MySQLData.sql mariadb_slave:/home/
 
 docker exec -it mariadb mysql -uroot -p123456 < /home/MySQLData.sql
 
-docker run -v /data/mysql/data:/var/lib/mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root  --name mariadb -d mariadb
+docker run -v /Users/wenj91/data/mysql/data:/var/lib/mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456  --name mariadb -d mariadb
 
 ## log pos
 grep -R log_error /etc/mysql/*
