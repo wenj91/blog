@@ -12,31 +12,38 @@ Slave IP is 10.1.20.40
 APPROACH #1 : Data is 100% InnoDB
 This is very straightforward.
 
-STEP01) If the Master does not have server-id defined in my.cnf you will have to add it
+## STEP01) If the Master does not have server-id defined in my.cnf you will have to add it
 
+```ini
 [mysqld]
 server-id=100
-STEP02) If the Master does not have log-bin defined in my.cnf you will have to add it
-
+```
+## STEP02) If the Master does not have log-bin defined in my.cnf you will have to add it
+```ini
 [mysqld]
 log-bin=mysql-bin
-STEP03) If you have do Steps 1 and/or 2 on the Master, do service mysql restart (mandatory)
+```
+## STEP03) If you have do Steps 1 and/or 2 on the Master, do service mysql restart (mandatory)
 
-STEP04) Create MySQL Replication User on the Master
-
+## STEP04) Create MySQL Replication User on the Master
+```bash
 mysql> GRANT SELECT,REPLICATION USER,REPLICATION CLIENT ON *.*
 TO repluser@'10.1.2.30' IDENTIFIED BY 'replpass';
-STEP05) Create a mysqldump as a point-in-time snapshot on the Master
+```
+## STEP05) Create a mysqldump as a point-in-time snapshot on the Master
 
+```bash
 MYSQL_CONN="-uroot -ppassword"
 MYSQLDUMP_OPTIONS="--master-data=1 --single-transaction --flush-privileges"
 MYSQLDUMP_OPTIONS="${MYSQLDUMP_OPTIONS} --routines --triggers --all-databases"
 mysqldump ${MYSQL_CONN} ${MYSQLDUMP_OPTIONS} > MySQLData.sql 
+```
 When done, line 22 of MySQLData should have the binary log and position of the Master as of the moment the mysqldump was launched. To see it, just run
-
+```bash
 head -22 MySQLData.sql | tail -1
-STEP06) Create replication status on the Slave with
-
+```
+## STEP06) Create replication status on the Slave with
+```sql
 CHANGE MASTER TO
 MASTER_HOST='10.1.20.30',
 MASTER_PORT=3306,
@@ -44,15 +51,19 @@ MASTER_USER='repluser',
 MASTER_PASSWORD='replpass',
 MASTER_LOG_FILE='mysql-bin.000001',
 MASTER_LOG_POS=4;
-STEP 07) Load the mysqldump into the Slave
+```
+## STEP 07) Load the mysqldump into the Slave
 
+```bash
 mysql -u... -p... < MySQLData.sql 
+```
 Don't worry about replication starting at the right place. Remember, I said line 22 contains the command with correct binary log and position.
 
-STEP 08) Run SHOW SLAVE STATUS\G
+## STEP 08) Run SHOW SLAVE STATUS\G
 
 If Slave_IO_Running is Yes and Slave_SQL_Running is Yes, CONGRATULATIONS !!!
 
+## PS
 APPROACH #2 : Data is InnoDB/MyISAM Mix
 Rather than reinvent the wheel, please read my earlier posts on using rsync to make a Slave
 
@@ -62,7 +73,7 @@ Apr 08, 2011 - Create a MySQL slave from another slave, but point it at the mast
 Give it a Try !!!
 
 
-```
+```bash
 # dump一份主节点数据
 mysqldump -uroot -p123456 --master-data=1 --single-transaction --flush-privileges --routines --triggers --all-databases > MySQLData.sql
 

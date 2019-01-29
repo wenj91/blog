@@ -18,7 +18,7 @@ docker.io/mysql     5.5                 f13c4be36ec5        3 weeks ago         
 70fb9f7d1ce4d95c6b640a559a099e107678a552340fab49b6539fd69296376d
 
 # mariadb启动方法也是一样的
-[root@localhost ~]# docker run -v /var/data/mariadb/data:/var/lib/mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=\!Zlw\#\@\!12\$  -e MYSQL_ROOT_HOST=127.0.0.1 --name mariadb --ulimit nofile=65536:65536 -d mariadb
+[root@localhost ~]# docker run -v /var/data/mariadb/data:/var/lib/mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456  -e MYSQL_ROOT_HOST=127.0.0.1 --name mariadb --ulimit nofile=65536:65536 -d mariadb
 
  mysql -P3307  --protocol=TCP  -uroot -p
 ```
