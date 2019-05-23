@@ -10,6 +10,8 @@
 　　3.1、端口映射，data目录映射，配置文件映射。
 　　# docker run -p 6699:6379 --name myredis -v $PWD/redis.conf:/etc/redis/redis.conf -v $PWD/data:/data -d redis:3.2 redis-server /etc/redis/redis.conf --appendonly yes
 
+docker run -p 6379:6379 --name myredis -v d:/data/redis/redis.conf:/etc/redis/redis.conf -v d:/data/redis/data:/data -d redis redis-server /etc/redis/redis.conf --appendonly yes
+
 　　命令说明：
 　　--name myredis : 指定容器名称，这个最好加上，不然在看docker进程的时候会很尴尬。
 　　-p 6699:6379 ： 端口映射，默认redis启动的是6379，至于外部端口，随便玩吧，不冲突就行。
