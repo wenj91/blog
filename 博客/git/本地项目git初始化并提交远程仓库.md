@@ -12,6 +12,12 @@ git commit -m "init"
 git remote add origin {远程仓库地址}
 git remote -v
 
+git pull
+
+git branch --set-upstream-to=origin/master master
+
+git pull --allow-unrelated-histories
+
 * push到远程仓库
 git push -u origin master
 
