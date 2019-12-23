@@ -3,13 +3,19 @@
 在Docker容器创建好之后，可能会发现容器时间跟宿主机时间不一致，这就需要同步它们的时间，让容器时间跟宿主机时间保持一致。如下：
 
 宿主机时间
+
+```bash
 [root@slave-1 ~]# date
-Fri May 12 11:20:30 CST 2017
+Fri May 12 11:20:30 CT 2017
+```
  
 容器时间
+
+```bash
 [root@slave-1 ~]# docker exec -ti 87986863838b /bin/bash
 root@87986863838b:/# date                                                                                                                    
 Fri May 12 03:20:33 UTC 2017
+```
  
 发现两者之间的时间相差了八个小时！
 宿主机采用了CST时区，CST应该是指（China Shanghai Time，东八区时间）
@@ -24,10 +30,13 @@ Fri May 12 03:20:33 UTC 2017
 [root@slave-1 ~]# docker cp /etc/localtime 87986863838b:/etc/
  
 然后再登陆容器，查看时间，发现已经跟宿主机时间同步了
+
+```bash
 [root@slave-1 ~]# docker exec -ti 87986863838b /bin/bash
 root@87986863838b:/# date                                                                                                                    
 Fri May 12 11:26:19 CST 2017
- 
+```
+
 3）创建dockerfile文件的时候，自定义该镜像的时间格式及时区。在dockerfile文件里添加下面内容：
 ......
 FROM tomcat
@@ -36,6 +45,8 @@ ENV CATALINA_HOME /usr/local/tomcat
 #设置时区
 RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
 ......
+
+最后利用 ntpdate time.windows.com 同步一下时间
  
 保存后，利用docker build命令生成镜像使用即可,使用dockerfile创建的镜像的容器改变了容器的时区，这样不仅保证了容器时间与宿主机时间一致（假如宿主机也是CST）,并且像上面使用tomcat作为父镜像的话，JVM的时区也是CST,这样tomcat的日志信息的时间也是和宿主机一致的，像上面那两种方式只是保证了宿主机时间与容器时间一致，JVM的时区并没有改变，tomcat日志的打印时间依旧是UTC。
 ***************当你发现自己的才华撑不起野心时，就请安静下来学习吧***************
