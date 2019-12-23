@@ -55,10 +55,6 @@ http {
         # Load configuration files for the default server block.
         include /etc/nginx/default.d/*.conf;
 
-        location / {
-        proxy_pass http://pic; 
-        }
-
         error_page 404 /404.html;
             location = /40x.html {
         }
@@ -68,17 +64,12 @@ http {
         }
     }
 
-    upstream pic{
-                server 182.254.161.54:8088 weight=5;
-                server 182.254.161.54:8089 weight=5;
-    }
-
 }
 ```
 
 ## 启动容器
 ```
-docker run --name static_server -d -p 8080:8080  -v /usr/local/nginx/conf/nginx.conf:/etc/nginx/nginx.conf  -v /usr/local/nginx/logs:/var/log/nginx -v /usr/local/nginx/html:/usr/share/nginx/html -d docker.io/nginx
+docker run --name static_server -d -p 80:80  -v /data/nginx/conf/nginx.conf:/etc/nginx/nginx.conf  -v /data/nginx/logs:/var/log/nginx -v /data/nginx/html:/usr/share/nginx/html -d docker.io/nginx
 ```
 
 查看启动的容器
