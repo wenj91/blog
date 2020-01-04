@@ -69,7 +69,7 @@ http {
 
 ## 启动容器
 ```
-docker run --name static_server -d -p 80:80  -v /data/nginx/conf/nginx.conf:/etc/nginx/nginx.conf  -v /data/nginx/logs:/var/log/nginx -v /data/nginx/html:/usr/share/nginx/html -d docker.io/nginx
+docker run --name nginx -d -p 443:443 -p 80:80  -v /data/nginx/conf/nginx.conf:/etc/nginx/nginx.conf  -v /data/nginx/logs:/var/log/nginx -v /data/nginx/html:/usr/share/nginx/html -v /data/nginx/conf/cert:/etc/nginx/cert -d docker.io/nginx
 ```
 
 查看启动的容器
