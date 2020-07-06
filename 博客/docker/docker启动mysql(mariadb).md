@@ -22,6 +22,10 @@ docker.io/mysql     5.5                 f13c4be36ec5        3 weeks ago         
 
 docker run -v d:/data/mariadb/data:/var/lib/mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456  -e MYSQL_ROOT_HOST=127.0.0.1 --name mariadb --ulimit nofile=65536:65536 -d mariadb:10.3.14
 
+docker run -v /Users/wenj91/data/mysql:/var/lib/mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456  --name mariadb --ulimit nofile=65536:65536 -d mariadb
+
+docker run --name tidb-server -d -v /Users/wenj91/data/tidb:/tmp/tidb -p 4000:4000 -p 10080:10080 pingcap/tidb:latest
+
 docker run -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456  -e MYSQL_ROOT_HOST=127.0.0.1 --name mariadb --ulimit nofile=65536:65536 -d mariadb
 
  mysql -P3307  --protocol=TCP  -uroot -p
