@@ -29,6 +29,12 @@ docker run --name tidb-server -d -v /Users/wenj91/data/tidb:/tmp/tidb -p 4000:40
 docker run -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456  -e MYSQL_ROOT_HOST=127.0.0.1 --name mariadb --ulimit nofile=65536:65536 -d mariadb
 
  mysql -P3307  --protocol=TCP  -uroot -p
+
+ docker run -v /Users/wenj91/data/mysql:/var/lib/mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --name mysql --ulimit nofile=65536:65536 -d mysql:latest
+
+ docker run --name mysql8.0.21 -v /Users/wenj91/data/mysql:/var/lib/mysql -v /Users/wenj91/data/mysql/my.cnf:/etc/mysql/my.cnf -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -d mysql:8.0.21 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+
 ```
 
 命令详细介绍：  
