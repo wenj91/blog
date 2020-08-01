@@ -32,7 +32,7 @@ docker run -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456  -e MYSQL_ROOT_HOST=127.0.
 
  docker run -v /Users/wenj91/data/mysql:/var/lib/mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --name mysql --ulimit nofile=65536:65536 -d mysql:latest
 
- docker run --name mysql8.0.21 -v /Users/wenj91/data/mysql:/var/lib/mysql -v /Users/wenj91/data/mysql/my.cnf:/etc/mysql/my.cnf -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -d mysql:8.0.21 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+ docker run --name mysql8.0.21 -v /Users/wenj91/data/mysql2:/var/lib/mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -d mysql:8.0.21 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 
 
 ```
