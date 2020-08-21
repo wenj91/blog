@@ -54,7 +54,7 @@ sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F2
 Copy
 导入密钥后，在MariaDB存储库中添加以下内容：
 
-sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://ftp.utexas.edu/mariadb/repo/10.3/ubuntu bionic main'
+sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://mirrors.cloud.tencent.com/mariadb/repo/10.3/ubuntu bionic main'
 Copy
 如果收到错误消息，提示add-apt-repository command not found安装software-properties-common软件包。
 
