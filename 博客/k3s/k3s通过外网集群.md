@@ -40,3 +40,26 @@ On agent node:
 ----
 
 经过试验发现方案2比较好用，方案1失败
+
+目标机器都装上wireguard
+server端加上如下参数：
+--tls-san <public_ip> \
+    --node-ip <public_ip> \
+    --node-external-ip <public_ip> \
+    --no-deploy servicelb \
+    --flannel-backend wireguard \
+    --kube-proxy-arg "proxy-mode=ipvs" "masquerade-all=true" \
+    --kube-proxy-arg "metrics-bind-address=0.0.0.0"
+
+将 <public_ip> 替换成控制节点的公网 IP 。
+flannel 使用 wireguard 协议来跨主机通信。
+kube-proxy 使用 ipvs 模式。
+
+agent端都加上如下参数：
+--node-external-ip <public_ip> \
+    --node-ip <public_ip> \
+    --kube-proxy-arg "proxy-mode=ipvs" "masquerade-all=true" \
+    --kube-proxy-arg "metrics-bind-address=0.0.0.0"
+
+
+其他问题具体还要参考：跨云厂商部署k3s集群.md
