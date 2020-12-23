@@ -128,7 +128,7 @@ public class User {
     private Integer age;
     private String email;
     @TableField(typeHandler = ItemHandler.class) // 这里加上typeHandler
-    private Item items;
+    private Item item;
 }
 ```
 
