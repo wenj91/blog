@@ -1,4 +1,4 @@
-# [k3s部署cert-manager v1.4.0](https://cert-manager.io/docs/installation/kubernetes/)
+# [K3S的基础配置与TLS的自动化维护 v1.4.0](https://cert-manager.io/docs/installation/kubernetes/)
 
 Installing with regular manifests[](#)
 --------------------------------------
